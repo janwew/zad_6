@@ -3,8 +3,6 @@ import dayjs from 'dayjs';
 
 const form = document.querySelector('#birthday-form');
 const dateInput = document.querySelector('#date-input');
-const dialog = document.querySelector('#result-dialog');
-const closeBtn = document.querySelector('#close-dialog');
 const dialogText = document.querySelector('#dialog-text');
 
 form.addEventListener('submit', (e) => {
@@ -19,7 +17,7 @@ form.addEventListener('submit', (e) => {
 
   const BirthdayToday = selectedDate.date() === today.date() && selectedDate.month() === today.month();
 
-  let message = `<p>Od Twoich narodzin upłynęło już <strong>${daysPassed}</strong> dni.</p>`;
+  let message = `<p>Od Twoich narodzin upłynęło <strong>${daysPassed}</strong> dni.</p>`;
 
   if (BirthdayToday) {
     message += `<p class="font-bold text-xl mt-4">Wszystkiego najlepszego!</p>`;
@@ -40,9 +38,4 @@ form.addEventListener('submit', (e) => {
   }
 
   dialogText.innerHTML = message;
-  dialog.showModal();
-});
-
-closeBtn.addEventListener('click', () => {
-  dialog.close();
 });
