@@ -1,60 +1,48 @@
-import './style.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.js'
+import './style.css';
+import dayjs from 'dayjs';
 
-document.querySelector('#app').innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const form = document.querySelector('#birthday-form');
+const dateInput = document.querySelector('#date-input');
+const dialog = document.querySelector('#result-dialog');
+const closeBtn = document.querySelector('#close-dialog');
+const dialogText = document.querySelector('#dialog-text');
 
-<div class="ticks"></div>
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const selectedDate = dayjs(dateInput.value);
+  const today = dayjs().startOf('day');
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+  if (!selectedDate.isValid()) return;
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+  const daysPassed = today.diff(selectedDate, 'day');
 
-setupCounter(document.querySelector('#counter'))
+  const BirthdayToday = selectedDate.date() === today.date() && selectedDate.month() === today.month();
+
+  let message = `<p>Od Twoich narodzin upłynęło już <strong>${daysPassed}</strong> dni.</p>`;
+
+  if (BirthdayToday) {
+    message += `<p class="font-bold text-xl mt-4">Wszystkiego najlepszego!</p>`;
+  } else {
+    let nextBirthday = selectedDate.year(today.year());
+    
+    if (nextBirthday.isBefore(today, 'day')) {
+      nextBirthday = nextBirthday.add(1, 'year');
+    }
+
+    const weeksToBirthday = nextBirthday.diff(today, 'week');
+
+    if (weeksToBirthday === 0) {
+      message += `<p class="mt-4 font-semibold">Masz urodziny w tym tygodniu!</p>`;
+    } else {
+      message += `<p class="mt-4 text-sm">Do Twoich kolejnych urodzin pozostało: ${weeksToBirthday} tygodni.</p>`;
+    }
+  }
+
+  dialogText.innerHTML = message;
+  dialog.showModal();
+});
+
+closeBtn.addEventListener('click', () => {
+  dialog.close();
+});

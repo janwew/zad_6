@@ -1,13 +1,31 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>zad_6</title>
+    <title>Laboratorium 5</title>
   </head>
-  <body>
-    <div id="app"></div>
+  <body class="p-8 bg-gray-50 flex flex-col items-center">
+    <div id="app" class="w-full max-w-md bg-white p-6 rounded-xl shadow-sm">
+      <h1 class="text-2xl font-bold text-primary mb-6">Kalkulator Urodzin</h1>
+      
+      <form id="birthday-form" class="flex flex-col gap-4">
+        <label for="date-input" class="text-sm font-medium text-gray-700">Wybierz dzień i miesiąc urodzenia:</label>
+        <input type="date" id="date-input" class="border p-2 rounded" required>
+        
+        <button type="submit" class="bg-blue-300 p-4 rounded font-bold hover:bg-blue-400 transition-colors">
+          Oblicz
+        </button>
+      </form>
+    </div>
+
+    <dialog id="result-dialog" class="bg-gray-200 p-6 rounded-xl shadow-2xl relative max-w-xs w-full backdrop:bg-black/40">
+      <button id="close-dialog" class="absolute top-2 right-4 font-bold text-2xl hover:text-gray-700">&times;</button>
+      
+      <div id="dialog-text" class="text-red-600 mt-4 text-center text-lg font-medium"></div>
+    </dialog>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
