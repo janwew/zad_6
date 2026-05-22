@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 const form = document.querySelector('#birthday-form');
 const dateInput = document.querySelector('#date-input');
 const dialogText = document.querySelector('#dialog-text');
+const dialog = document.querySelector('#result-dialog');
+const closeBtn = document.querySelector('#close-dialog');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -38,4 +40,9 @@ form.addEventListener('submit', (e) => {
   }
 
   dialogText.innerHTML = message;
+  dialog.showModal();
+});
+
+closeBtn.addEventListener('click', () => {
+  dialog.close();
 });
