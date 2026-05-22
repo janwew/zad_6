@@ -33,7 +33,7 @@ form.addEventListener('submit', (e) => {
     const weeksToBirthday = nextBirthday.diff(today, 'week');
 
     if (weeksToBirthday === 0) {
-      message += `<p class="mt-4 font-semibold">Masz urodziny w tym tygodniu!</p>`;
+      message += `<p class="mt-4 font-semibold">Masz urodziny w tym tygodniu</p>`;
     } else {
       message += `<p class="mt-4 text-sm">Do Twoich kolejnych urodzin pozostało: ${weeksToBirthday} tygodni.</p>`;
     }
